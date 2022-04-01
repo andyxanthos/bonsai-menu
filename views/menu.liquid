@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/main.css">
+    <title>{{ settings.restaurantName }} | Menu</title>
+</head>
+<body>
+    <div class="menu-container">
+        <header data-bg={{settings.bonsaiSettings.headerBackground}}>
+            <h1 class="restaurant-name">{{ settings.restaurantName }}</h1>
+        </header>
+        <main>
+            <section class="contact">
+                <h2 class="contact-title">Contact {{settings.restaurantName}}</h3>
+                {% if settings.restaurantImage %}
+                <img src={{settings.restaurantImage}} alt="An image of the restaurant" class="restaurant-image">
+                {% endif %}
+                <section class="contact-address">
+                    <p class="address-line-one">{{settings.restaurantAddrStreet}}</p>
+                    <p class="address-line-two">
+                    {{settings.restaurantAddrTown}}, {{settings.restaurantAddrState}} {{settings.restaurantAddrZip}}
+                    </p>
+                </section>
+                <p class="contact-line">
+                    <i class="bi bi-telephone-fill"></i> {{ settings.restaurantPhone }}
+                </p>
+                <p class="contact-line">
+                    <i class="bi bi-envelope-fill"></i> {{ settings.restaurantEmail}}
+                </p>
+                {% if hours %}
+                <section class="hours">
+                    <p class="hours-title">Hours</p>
+                    {% for day in hours %}
+                    <div class="day">
+                    <span class="dayOfWeek">{{day.day}}</span>
+                        {% if day.closed == null %}
+                            <span class="dayHours">{{day.open}} to {{day.close}}</span>
+                        {% else %}
+                            <span class="dayHours closed">Closed</span>
+                        {% endif %}
+                    </div>   
+                    {% endfor %}
+                </section>
+                {% endif %}
+            </section>
+            <section class="menu">
+                    <section class="mobile-contact">
+                        <img src={{settings.restaurantImage}} class="restaurant-image">
+                        <p class="mobile-contact-address">
+                            {{settings.restaurantAddrStreet}} - {{ settings.restaurantAddrTown }}, {{settings.restaurantAddrState}}
+                        </p>
+                        <button class="mobile-contact-phone"><i class="bi bi-telephone-fill"></i> {{settings.restaurantPhone}}</button>
+                    </section>
+                    {% for section in menu.sections %}
+                    <section class="menu-section">
+                        <section class="menu-title-section">
+                            <h3>{{section.title}}</h3>
+                        </section>
+                        <section class="menu-items">
+                        {% for i in section.items %}
+                            <article class="menu-item">
+                                {%  if i.itemDescription %}
+                                <p class="menu-item-name">{{i.itemName}}</p>
+                                <p class="menu-item-description">{{i.itemDescription}}</p>
+                                {% else %}
+                                <p class="menu-item-name no-description">{{i.itemName}}</p>
+                                {% endif %}
+                                <div class="sizes">
+                                    {% for sp in i.itemSizesAndPrices %}
+                                        <span class="size">{{sp.size}}</span>
+                                        {% if sp.note %}
+                                        <span class="price">(${{sp.price}} - {{sp.note}})</span>
+                                        {% else %}
+                                        <span class="price">(${{sp.price}})</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </article>
+                        {% endfor %}
+                        </section>
+                    </section>
+                    {% endfor %}
+            </section>
+        </main>
+    </div>
+    <script src="/main.js"></script>
+</body>
+</html>
