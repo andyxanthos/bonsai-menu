@@ -2,6 +2,8 @@
 
 Easily create lightweight, attractive restaurant menu sites.
 
+Check out the [Getting Started](https://github.com/andyxanthos/bonsai-menu/wiki/Get-Started) guide on the Wiki.
+
 ## Concepts
 
 bonsai-menu reads configuration information from three JSON files: `bonsai.json`, `bonsai-menu.json`, and `hours.json`. This information is injected into the front-end using LiquidJS.
